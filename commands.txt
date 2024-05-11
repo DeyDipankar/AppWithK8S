@@ -1,6 +1,11 @@
 #docker
-docker tag local-image:tagname new-repo:tagname
-docker push new-repo:tagname
+Push image to docker hub
+1. create a tag for the image - docker build . -t image_name(example service_name:version-1.0.0)
+2. docker login -> login wiht docker username and pw
+3. docker tag service_name:version-1.0.0 username/service_name:version-1.0.0 (docker tag local-image:tagname new-repo:tagname)
+4. docker push username/service_name:version-1.0.0 ()
+
+docker tag local-image:tagname new-repo:tagname(docker push new-repo:tagname)
 
 #git
 git mv App tempname && git mv tempname app
