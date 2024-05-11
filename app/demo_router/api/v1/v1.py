@@ -1,4 +1,4 @@
-from app.demo_router.api.v1 import demo1
+from demo_router.api.v1 import demo1
 from fastapi import APIRouter
 
 v1_router = APIRouter(
