@@ -1,0 +1,80 @@
+#SECRETS
+apiVersion: v1
+kind: Secret
+metadata:
+  name: app1-secret
+  labels:
+    type: app1-secret
+  namespace: default
+data:
+  APP1_SECRET_KEY: MiozJjReNSU=
+---
+#DEPLOYMENT
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app1-deployment
+  labels:
+    tier: backend
+  namespace: default
+
+spec:
+
+  template:
+    metadata:
+      name: fastapi-app1-backend-pod
+      labels:
+        app: fastapi-app1-backend
+        tier: backend
+      namespace: default
+    spec:
+      containers:
+        - image: deydipankar825/fastapi_app1:version-1.0.1
+          name: app1
+          envFrom:
+            - secretRef:
+                name: app1-secret
+
+
+  selector:
+    matchLabels:
+      app: fastapi-app1-backend
+
+  replicas: 3
+
+---
+#NODE PORT SERVICE
+apiVersion: v1
+kind: Service
+metadata:
+  name: app1-node-port-service
+  labels:
+    tier: node-port-service
+  namespace: default
+
+spec:
+  type: NodePort
+  ports:
+    - port: 8000
+      targetPort: 8000
+      nodePort: 30000
+  selector:
+      app: fastapi-app1-backend
+
+---
+#CLUSTER IP SERVICE
+apiVersion: v1
+kind: Service
+metadata:
+  name: app1-clusterip-service
+  labels:
+    tier: clusterip-service
+  namespace: default
+
+spec:
+  type: ClusterIP
+  ports:
+    - port: 8000
+      targetPort: 8000
+  selector:
+    app: fastapi-app1-backend
