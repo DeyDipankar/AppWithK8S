@@ -1,0 +1,81 @@
+#SECRETS
+apiVersion: v1
+kind: Secret
+metadata:
+  name: app2-secret
+  labels:
+    type: app2-secret
+  namespace: default
+data:
+  APP2_SECRET_KEY: MSYyXjMlNCU1
+---
+#DEPLOYMENT
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app2-deployment
+  labels:
+    tier: backend
+  namespace: default
+
+spec:
+
+  template:
+    metadata:
+      name: fastapi-app2-backend-pod
+      labels:
+        app: fastapi-app2-backend
+        tier: backend
+      namespace: default
+    
+    spec:
+      containers:
+        - image: deydipankar825/fastapi_app2:version-1.0.1
+          name: app2
+          envFrom:
+            - secretRef:
+                name: app2-secret
+
+  selector:
+    matchLabels:
+      app: fastapi-app2-backend
+  
+  replicas: 2
+
+---
+#NODE PORT SERVICE
+apiVersion: v1
+kind: Service
+metadata:
+  name: app2-node-port-service
+  labels:
+    tier: node-port-service
+  namespace: default
+
+spec:
+  type: NodePort
+  ports:
+    - port: 8001
+      targetPort: 8001
+      nodePort: 30001
+
+  selector:
+    app: fastapi-app2-backend
+
+---
+#CLUSTER IP SERVICE
+apiVersion: v1
+kind: Service
+metadata:
+  name: app2-clusterip-service
+  labels:
+    tier: clusterip-service
+  namespace: default
+
+spec:
+  type: ClusterIP
+  ports:
+    - port: 8001
+      targetPort: 8001
+  selector:
+    app: fastapi-app2-backend
