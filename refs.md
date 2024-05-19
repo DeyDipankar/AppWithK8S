@@ -3,3 +3,5 @@
 2. Gunicron vs Uvicorn performance - https://stackoverflow.com/a/71546833
 
 3. Git merge vs squash vs rebase - https://medium.com/@shikha.ritu17/git-rebase-vs-merge-vs-squash-choosing-the-right-strategy-for-version-control-a9c9bb97040e
+
+4. How to view logs for multiple pods k8s - https://aptakube.com/blog/how-to-view-logs-from-multiple-pods-kubernetes
