@@ -14,3 +14,4 @@ git mv App tempname && git mv tempname app
 #create secrets
 1. command line -  kubectl create secret generic <secretname> --from-literal=<key1>=<value1> --from-literal=<key2>=<value2>
 2. from file - kubectl create secret generic --from-file=<path-to-filename>
+3. git tag -a k8s-test:v1.0.0 -m "my message" #annotated tag
