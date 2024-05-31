@@ -8,8 +8,6 @@ Push image to docker hub
 # k8s
 1. exec into a pod - kubectl exec --stdin --tty <pod name> -- /bin/bash
 
-docker tag local-image:tagname new-repo:tagname(docker push new-repo:tagname)
-
 #git
 git mv App tempname && git mv tempname app
 
