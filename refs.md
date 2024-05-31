@@ -5,3 +5,5 @@
 3. Git merge vs squash vs rebase - https://medium.com/@shikha.ritu17/git-rebase-vs-merge-vs-squash-choosing-the-right-strategy-for-version-control-a9c9bb97040e
 
 4. How to view logs for multiple pods k8s - https://aptakube.com/blog/how-to-view-logs-from-multiple-pods-kubernetes
+
+5. Git tags - https://git-scm.com/book/en/v2/Git-Basics-Tagging

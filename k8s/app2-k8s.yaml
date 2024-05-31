@@ -1,3 +1,25 @@
+# NAMESPACE
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: app2-ns
+  labels:
+    type: app2-namespace
+    
+---
+# CONFIGMAP
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app2-config
+  labels:
+    type: app2-configmap
+  namespace: app2-ns
+data:
+  APP1_HOST : http://app1-clusterip-service.app1-ns.svc.cluster.local:8000 #format- <service_name>.<namespace>.svc.cluster.local:port if not 80
+
+---
+
 #SECRETS
 apiVersion: v1
 kind: Secret
@@ -5,7 +27,7 @@ metadata:
   name: app2-secret
   labels:
     type: app2-secret
-  namespace: default
+  namespace: app2-ns
 data:
   APP2_SECRET_KEY: MSYyXjMlNCU1
 ---
@@ -16,7 +38,7 @@ metadata:
   name: app2-deployment
   labels:
     tier: backend
-  namespace: default
+  namespace: app2-ns
 
 spec:
 
@@ -26,15 +48,17 @@ spec:
       labels:
         app: fastapi-app2-backend
         tier: backend
-      namespace: default
+      namespace: app2-ns
     
     spec:
       containers:
-        - image: deydipankar825/fastapi_app2:version-1.0.1
+        - image: deydipankar825/fastapi_app2:version-1.0.2
           name: app2
           envFrom:
             - secretRef:
                 name: app2-secret
+            - configMapRef:
+                name: app2-config
 
   selector:
     matchLabels:
@@ -50,7 +74,7 @@ metadata:
   name: app2-node-port-service
   labels:
     tier: node-port-service
-  namespace: default
+  namespace: app2-ns
 
 spec:
   type: NodePort
@@ -70,7 +94,7 @@ metadata:
   name: app2-clusterip-service
   labels:
     tier: clusterip-service
-  namespace: default
+  namespace: app2-ns
 
 spec:
   type: ClusterIP
