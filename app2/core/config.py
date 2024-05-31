@@ -7,6 +7,8 @@ class Settings(BaseSettings):
     SERVICE_NAME : str =  "Service 2"
     APP2_SECRET_KEY : str
 
+    # inter namespace communication test
+    APP1_HOST : str
 
 
 

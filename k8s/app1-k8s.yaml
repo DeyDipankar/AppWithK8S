@@ -1,3 +1,13 @@
+#NAMESPACE
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: app1-ns
+  labels:
+    type: app1-namespace
+
+---
+
 #SECRETS
 apiVersion: v1
 kind: Secret
@@ -5,7 +15,7 @@ metadata:
   name: app1-secret
   labels:
     type: app1-secret
-  namespace: default
+  namespace: app1-ns
 data:
   APP1_SECRET_KEY: MiozJjReNSU=
 ---
@@ -16,7 +26,7 @@ metadata:
   name: app1-deployment
   labels:
     tier: backend
-  namespace: default
+  namespace: app1-ns
 
 spec:
 
@@ -26,7 +36,7 @@ spec:
       labels:
         app: fastapi-app1-backend
         tier: backend
-      namespace: default
+      namespace: app1-ns
     spec:
       containers:
         - image: deydipankar825/fastapi_app1:version-1.0.1
@@ -50,7 +60,7 @@ metadata:
   name: app1-node-port-service
   labels:
     tier: node-port-service
-  namespace: default
+  namespace: app1-ns
 
 spec:
   type: NodePort
@@ -69,7 +79,7 @@ metadata:
   name: app1-clusterip-service
   labels:
     tier: clusterip-service
-  namespace: default
+  namespace: app1-ns
 
 spec:
   type: ClusterIP

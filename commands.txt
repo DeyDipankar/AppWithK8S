@@ -8,11 +8,10 @@ Push image to docker hub
 # k8s
 1. exec into a pod - kubectl exec --stdin --tty <pod name> -- /bin/bash
 
-docker tag local-image:tagname new-repo:tagname(docker push new-repo:tagname)
-
 #git
 git mv App tempname && git mv tempname app
 
 #create secrets
 1. command line -  kubectl create secret generic <secretname> --from-literal=<key1>=<value1> --from-literal=<key2>=<value2>
 2. from file - kubectl create secret generic --from-file=<path-to-filename>
+3. git tag -a k8s-test:v1.0.0 -m "my message" #annotated tag
